@@ -22,14 +22,14 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api/latest"
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api/testapi"
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api/v1beta1"
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api/v1beta2"
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api/v1beta3"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/runtime"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/util"
+	"github.com/cnaize/kubernetes/pkg/api"
+	"github.com/cnaize/kubernetes/pkg/api/latest"
+	"github.com/cnaize/kubernetes/pkg/api/testapi"
+	"github.com/cnaize/kubernetes/pkg/api/v1beta1"
+	"github.com/cnaize/kubernetes/pkg/api/v1beta2"
+	"github.com/cnaize/kubernetes/pkg/api/v1beta3"
 )
 
 func TestSetsCodec(t *testing.T) {

@@ -17,9 +17,10 @@ limitations under the License.
 package host_path
 
 import (
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/kubelet/volume"
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/types"
+	"github.com/cnaize/kubernetes/pkg/api"
+	"github.com/cnaize/kubernetes/pkg/kubelet/volume"
+	"github.com/cnaize/kubernetes/pkg/types"
+	"github.com/golang/glog"
 )
 
 // This is the primary entrypoint for volume plugins.
@@ -68,6 +69,7 @@ type hostPath struct {
 
 // SetUp does nothing.
 func (hp *hostPath) SetUp() error {
+	glog.Warningln("MOUNTING HOST PATH")
 	return nil
 }
 

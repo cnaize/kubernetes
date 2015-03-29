@@ -20,9 +20,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api/meta"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/client"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/util/wait"
+	"github.com/cnaize/kubernetes/pkg/api/meta"
 )
 
 const (

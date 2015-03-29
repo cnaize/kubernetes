@@ -17,10 +17,10 @@ limitations under the License.
 package v1beta3
 
 import (
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api/resource"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/runtime"
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/types"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/util"
+	"github.com/cnaize/kubernetes/pkg/api/resource"
+	"github.com/cnaize/kubernetes/pkg/types"
 )
 
 // Common string formats
@@ -199,6 +199,8 @@ type VolumeSource struct {
 	GitRepo *GitRepoVolumeSource `json:"gitRepo"`
 	// Secret represents a secret that should populate this volume.
 	Secret *SecretVolumeSource `json:"secret"`
+
+	ScriptablePersistentDisk *ScriptablePersistentDiskVolumeSource `json:"scriptablePersistentDisk"`
 }
 
 // HostPathVolumeSource represents bare host directory volume.
@@ -252,6 +254,11 @@ type GitRepoVolumeSource struct {
 type SecretVolumeSource struct {
 	// Reference to a Secret
 	Target ObjectReference `json:"target" description:"target is a reference to a secret"`
+}
+
+type ScriptablePersistentDiskVolumeSource struct {
+	Script string `json:"script"`
+	Params string `json:"params"`
 }
 
 // ContainerPort represents a network port in a single container.

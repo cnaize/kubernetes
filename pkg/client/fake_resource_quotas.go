@@ -17,8 +17,8 @@ limitations under the License.
 package client
 
 import (
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/labels"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 // FakeResourceQuotas implements ResourceQuotaInterface. Meant to be embedded into a struct to get a default

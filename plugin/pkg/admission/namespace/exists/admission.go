@@ -21,15 +21,15 @@ import (
 	"io"
 
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/admission"
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
-	apierrors "github.com/GoogleCloudPlatform/kubernetes/pkg/api/errors"
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api/latest"
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api/meta"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/client"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/client/cache"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/labels"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/runtime"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/watch"
+	"github.com/cnaize/kubernetes/pkg/api"
+	apierrors "github.com/cnaize/kubernetes/pkg/api/errors"
+	"github.com/cnaize/kubernetes/pkg/api/latest"
+	"github.com/cnaize/kubernetes/pkg/api/meta"
 )
 
 func init() {

@@ -17,8 +17,8 @@ limitations under the License.
 package record
 
 import (
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/util"
+	"github.com/cnaize/kubernetes/pkg/api"
 	"testing"
 )
 

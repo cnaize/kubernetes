@@ -19,7 +19,7 @@ package constraint
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 // Allowed returns true if pods is a collection of bound pods

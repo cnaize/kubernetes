@@ -17,9 +17,9 @@ limitations under the License.
 package minion
 
 import (
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/labels"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/watch"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 // MinionRegistry is an interface for things that know how to store minions.

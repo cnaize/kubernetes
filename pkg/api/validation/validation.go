@@ -20,12 +20,12 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
-	errs "github.com/GoogleCloudPlatform/kubernetes/pkg/api/errors"
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api/resource"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/capabilities"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/labels"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/util"
+	"github.com/cnaize/kubernetes/pkg/api"
+	errs "github.com/cnaize/kubernetes/pkg/api/errors"
+	"github.com/cnaize/kubernetes/pkg/api/resource"
 
 	"github.com/golang/glog"
 )
@@ -273,6 +273,10 @@ func validateSource(source *api.VolumeSource) errs.ValidationErrorList {
 		numVolumes++
 		allErrs = append(allErrs, validateSecretVolumeSource(source.Secret).Prefix("secret")...)
 	}
+	if source.ScriptablePersistentDisk != nil {
+		numVolumes++
+		allErrs = append(allErrs, validateScriptablePersistentDiskVolumeSource(source.ScriptablePersistentDisk).Prefix("scriptablePersistentDisk")...)
+	}
 	if numVolumes != 1 {
 		allErrs = append(allErrs, errs.NewFieldInvalid("", source, "exactly 1 volume type is required"))
 	}
@@ -320,6 +324,15 @@ func validateSecretVolumeSource(secretSource *api.SecretVolumeSource) errs.Valid
 	if secretSource.Target.Kind != "Secret" {
 		allErrs = append(allErrs, errs.NewFieldInvalid("target.kind", secretSource.Target.Kind, "Secret"))
 	}
+	return allErrs
+}
+
+func validateScriptablePersistentDiskVolumeSource(PD *api.ScriptablePersistentDiskVolumeSource) errs.ValidationErrorList {
+	allErrs := errs.ValidationErrorList{}
+	if PD.Script == "" {
+		allErrs = append(allErrs, errs.NewFieldRequired("script", PD.Script))
+	}
+
 	return allErrs
 }
 

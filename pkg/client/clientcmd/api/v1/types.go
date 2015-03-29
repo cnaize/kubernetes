@@ -17,8 +17,8 @@ limitations under the License.
 package v1
 
 import (
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api/v1beta3"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/runtime"
+	"github.com/cnaize/kubernetes/pkg/api/v1beta3"
 )
 
 // Where possible, json tags match the cli argument names.

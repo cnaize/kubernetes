@@ -20,7 +20,7 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 func TestSelectContainer(t *testing.T) {

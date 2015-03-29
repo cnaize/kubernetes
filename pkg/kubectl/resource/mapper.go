@@ -20,8 +20,8 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api/meta"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/runtime"
+	"github.com/cnaize/kubernetes/pkg/api/meta"
 )
 
 // Mapper is a convenience struct for holding references to the three interfaces

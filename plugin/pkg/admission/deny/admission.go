@@ -21,8 +21,8 @@ import (
 	"io"
 
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/admission"
-	apierrors "github.com/GoogleCloudPlatform/kubernetes/pkg/api/errors"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/client"
+	apierrors "github.com/cnaize/kubernetes/pkg/api/errors"
 )
 
 func init() {

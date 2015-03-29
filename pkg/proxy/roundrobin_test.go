@@ -20,7 +20,7 @@ import (
 	"net"
 	"testing"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 func TestValidateWorks(t *testing.T) {

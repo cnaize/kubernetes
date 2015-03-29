@@ -22,7 +22,7 @@ import (
 
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/conversion"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/runtime"
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/types"
+	"github.com/cnaize/kubernetes/pkg/types"
 )
 
 // Accessor takes an arbitary object pointer and returns meta.Interface.

@@ -20,7 +20,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 type NodesInterface interface {

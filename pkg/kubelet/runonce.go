@@ -20,8 +20,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/kubelet/dockertools"
+	"github.com/cnaize/kubernetes/pkg/api"
 	"github.com/golang/glog"
 )
 

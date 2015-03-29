@@ -3738,6 +3738,9 @@
      }
     }
    },
+   "v1beta3.ScriptablePersistentDiskVolumeSource": {
+    "id": "v1beta3.ScriptablePersistentDiskVolumeSource",
+   },
    "v1beta3.Lifecycle": {
     "id": "v1beta3.Lifecycle",
     "properties": {

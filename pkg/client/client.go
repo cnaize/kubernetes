@@ -23,8 +23,8 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/version"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 // Interface holds the methods for clients of Kubernetes,

@@ -28,9 +28,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/client"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/util/httpstream"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 func TestParsePortsAndNew(t *testing.T) {

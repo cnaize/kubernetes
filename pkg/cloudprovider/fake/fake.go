@@ -20,8 +20,8 @@ import (
 	"net"
 	"regexp"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/cloudprovider"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 // FakeCloud is a test-double implementation of Interface, TCPLoadBalancer and Instances. It is useful for testing.

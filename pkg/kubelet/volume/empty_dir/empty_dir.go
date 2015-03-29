@@ -20,10 +20,10 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/kubelet/volume"
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/types"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/util"
+	"github.com/cnaize/kubernetes/pkg/api"
+	"github.com/cnaize/kubernetes/pkg/kubelet/volume"
+	"github.com/cnaize/kubernetes/pkg/types"
 )
 
 // This is the primary entrypoint for volume plugins.

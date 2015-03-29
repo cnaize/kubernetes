@@ -21,8 +21,8 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/kubelet/dockertools"
+	"github.com/cnaize/kubernetes/pkg/api"
 	docker "github.com/fsouza/go-dockerclient"
 )
 

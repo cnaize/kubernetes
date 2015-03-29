@@ -20,8 +20,8 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api/meta"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/util"
+	"github.com/cnaize/kubernetes/pkg/api/meta"
 )
 
 // Store is a generic object storage interface. Reflector knows how to watch a server

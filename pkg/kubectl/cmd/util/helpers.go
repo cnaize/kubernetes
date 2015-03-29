@@ -26,8 +26,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api/latest"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/runtime"
+	"github.com/cnaize/kubernetes/pkg/api/latest"
 
 	"github.com/evanphx/json-patch"
 	"github.com/golang/glog"

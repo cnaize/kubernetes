@@ -20,8 +20,8 @@ import (
 	"reflect"
 	"testing"
 
-	current "github.com/GoogleCloudPlatform/kubernetes/pkg/api/v1beta3"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/runtime"
+	current "github.com/cnaize/kubernetes/pkg/api/v1beta3"
 )
 
 func roundTrip(t *testing.T, obj runtime.Object) runtime.Object {

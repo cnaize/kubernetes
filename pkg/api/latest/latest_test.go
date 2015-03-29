@@ -21,11 +21,11 @@ import (
 	"math/rand"
 	"testing"
 
-	internal "github.com/GoogleCloudPlatform/kubernetes/pkg/api"
-	apitesting "github.com/GoogleCloudPlatform/kubernetes/pkg/api/testing"
-	_ "github.com/GoogleCloudPlatform/kubernetes/pkg/api/v1beta1"
-	_ "github.com/GoogleCloudPlatform/kubernetes/pkg/api/v1beta2"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/util"
+	internal "github.com/cnaize/kubernetes/pkg/api"
+	apitesting "github.com/cnaize/kubernetes/pkg/api/testing"
+	_ "github.com/cnaize/kubernetes/pkg/api/v1beta1"
+	_ "github.com/cnaize/kubernetes/pkg/api/v1beta2"
 )
 
 func TestInternalRoundTrip(t *testing.T) {

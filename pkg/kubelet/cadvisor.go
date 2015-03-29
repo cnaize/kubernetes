@@ -21,7 +21,7 @@ import (
 	"fmt"
 
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/kubelet/dockertools"
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/types"
+	"github.com/cnaize/kubernetes/pkg/types"
 	cadvisor "github.com/google/cadvisor/info"
 )
 

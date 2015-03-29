@@ -21,7 +21,7 @@ import (
 	"time"
 
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/kubelet/dockertools"
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/types"
+	"github.com/cnaize/kubernetes/pkg/types"
 	"github.com/golang/glog"
 	"github.com/prometheus/client_golang/prometheus"
 )

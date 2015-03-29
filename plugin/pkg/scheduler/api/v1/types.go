@@ -17,7 +17,7 @@ limitations under the License.
 package v1
 
 import (
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api/v1beta3"
+	"github.com/cnaize/kubernetes/pkg/api/v1beta3"
 )
 
 type Policy struct {

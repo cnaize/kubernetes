@@ -19,7 +19,7 @@ package client
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 // ResourceQuotaUsagesNamespacer has methods to work with ResourceQuotaUsage resources in a namespace

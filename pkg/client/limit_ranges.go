@@ -20,8 +20,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/labels"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 // LimitRangesNamespacer has methods to work with LimitRange resources in a namespace

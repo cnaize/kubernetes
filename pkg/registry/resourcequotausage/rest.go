@@ -19,8 +19,8 @@ package resourcequotausage
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/runtime"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 // REST implements the RESTStorage interface for ResourceQuotaUsage

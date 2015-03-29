@@ -19,9 +19,9 @@ package api
 import (
 	"reflect"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api/resource"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/conversion"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/util"
+	"github.com/cnaize/kubernetes/pkg/api/resource"
 
 	"github.com/davecgh/go-spew/spew"
 )

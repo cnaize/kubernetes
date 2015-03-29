@@ -26,10 +26,10 @@ import (
 	"log"
 	"os"
 
-	kapi "github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	kclient "github.com/GoogleCloudPlatform/kubernetes/pkg/client"
 	klabels "github.com/GoogleCloudPlatform/kubernetes/pkg/labels"
 	kwatch "github.com/GoogleCloudPlatform/kubernetes/pkg/watch"
+	kapi "github.com/cnaize/kubernetes/pkg/api"
 	etcd "github.com/coreos/go-etcd/etcd"
 	skymsg "github.com/skynetservices/skydns/msg"
 )

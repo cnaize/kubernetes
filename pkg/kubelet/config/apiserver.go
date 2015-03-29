@@ -18,11 +18,11 @@ limitations under the License.
 package config
 
 import (
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/client"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/client/cache"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/kubelet"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/labels"
+	"github.com/cnaize/kubernetes/pkg/api"
 	"github.com/golang/glog"
 )
 

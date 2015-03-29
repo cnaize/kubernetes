@@ -20,8 +20,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/labels"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 // ResourceQuotasNamespacer has methods to work with ResourceQuota resources in a namespace

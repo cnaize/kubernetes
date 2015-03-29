@@ -17,7 +17,7 @@ limitations under the License.
 package pod
 
 import (
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 type BoundPodFactory interface {

@@ -21,10 +21,10 @@ import (
 	"reflect"
 	"testing"
 
-	newer "github.com/GoogleCloudPlatform/kubernetes/pkg/api"
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api/resource"
-	current "github.com/GoogleCloudPlatform/kubernetes/pkg/api/v1beta1"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/util"
+	newer "github.com/cnaize/kubernetes/pkg/api"
+	"github.com/cnaize/kubernetes/pkg/api/resource"
+	current "github.com/cnaize/kubernetes/pkg/api/v1beta1"
 )
 
 var Convert = newer.Scheme.Convert

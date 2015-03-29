@@ -29,8 +29,8 @@ import (
 	"strings"
 
 	"code.google.com/p/gcfg"
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/cloudprovider"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 type OVirtInstance struct {

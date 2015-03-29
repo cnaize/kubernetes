@@ -19,8 +19,8 @@ package cache
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/labels"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 //  TODO: generate these classes and methods for all resources of interest using

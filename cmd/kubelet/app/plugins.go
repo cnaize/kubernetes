@@ -21,12 +21,13 @@ import (
 	// Credential providers
 	_ "github.com/GoogleCloudPlatform/kubernetes/pkg/credentialprovider/gcp"
 	// Volume plugins
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/kubelet/volume"
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/kubelet/volume/empty_dir"
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/kubelet/volume/gce_pd"
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/kubelet/volume/git_repo"
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/kubelet/volume/host_path"
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/kubelet/volume/secret"
+	"github.com/cnaize/kubernetes/pkg/kubelet/volume"
+	"github.com/cnaize/kubernetes/pkg/kubelet/volume/empty_dir"
+	"github.com/cnaize/kubernetes/pkg/kubelet/volume/gce_pd"
+	"github.com/cnaize/kubernetes/pkg/kubelet/volume/git_repo"
+	"github.com/cnaize/kubernetes/pkg/kubelet/volume/host_path"
+	"github.com/cnaize/kubernetes/pkg/kubelet/volume/scriptable_pd"
+	"github.com/cnaize/kubernetes/pkg/kubelet/volume/secret"
 )
 
 // ProbeVolumePlugins collects all volume plugins into an easy to use list.
@@ -41,6 +42,7 @@ func ProbeVolumePlugins() []volume.Plugin {
 	allPlugins = append(allPlugins, git_repo.ProbeVolumePlugins()...)
 	allPlugins = append(allPlugins, host_path.ProbeVolumePlugins()...)
 	allPlugins = append(allPlugins, secret.ProbeVolumePlugins()...)
+	allPlugins = append(allPlugins, scriptable_pd.ProbeVolumePlugins()...)
 
 	return allPlugins
 }

@@ -20,8 +20,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/labels"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 // PodsNamespacer has methods to work with Pod resources in a namespace

@@ -17,7 +17,7 @@ limitations under the License.
 package constraint
 
 import (
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 // hostPortsConflict returns an array of host ports that at least two

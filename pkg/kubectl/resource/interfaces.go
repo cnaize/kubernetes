@@ -17,8 +17,8 @@ limitations under the License.
 package resource
 
 import (
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api/meta"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/client"
+	"github.com/cnaize/kubernetes/pkg/api/meta"
 )
 
 // RESTClient is a client helper for dealing with RESTful resources

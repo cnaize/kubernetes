@@ -17,7 +17,7 @@ limitations under the License.
 package binding
 
 import (
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 // Registry contains the functions needed to support a BindingStorage.

@@ -18,8 +18,8 @@ package v1beta2
 
 import (
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/runtime"
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/types"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/util"
+	"github.com/cnaize/kubernetes/pkg/types"
 )
 
 // Common string formats
@@ -74,6 +74,8 @@ type VolumeSource struct {
 	GitRepo *GitRepoVolumeSource `json:"gitRepo" description:"git repository at a particular revision"`
 	// Secret is a secret to populate the volume with
 	Secret *SecretVolumeSource `json:"secret" description:"secret to populate volume"`
+
+	ScriptablePersistentDisk *ScriptablePersistentDiskVolumeSource `json:"scriptablePersistentDisk"`
 }
 
 // HostPathVolumeSource represents bare host directory volume.
@@ -87,6 +89,11 @@ type EmptyDirVolumeSource struct{}
 type SecretVolumeSource struct {
 	// Reference to a Secret
 	Target ObjectReference `json:"target" description:"target is a reference to a secret"`
+}
+
+type ScriptablePersistentDiskVolumeSource struct {
+	Script string `json:"script`
+	Params string `json:"params"`
 }
 
 // Protocol defines network protocols supported for things like conatiner ports.
