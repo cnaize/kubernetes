@@ -21,8 +21,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/registry/registrytest"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 func TestSetEndpoints(t *testing.T) {

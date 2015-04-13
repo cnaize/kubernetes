@@ -20,7 +20,7 @@ import (
 	"net/http"
 	"sort"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
+	"github.com/cnaize/kubernetes/pkg/api"
 
 	"github.com/emicklei/go-restful"
 )

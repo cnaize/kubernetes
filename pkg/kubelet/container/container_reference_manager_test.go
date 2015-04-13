@@ -19,7 +19,7 @@ package container
 import (
 	"testing"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 func TestFieldPath(t *testing.T) {

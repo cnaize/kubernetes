@@ -20,8 +20,8 @@ import (
 	"net"
 	"regexp"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/cloudprovider"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 // FakeBalancer is a fake storage of balancer information

@@ -19,8 +19,8 @@ package rest
 import (
 	"testing"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/runtime"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 func TestBeforeUpdate(t *testing.T) {

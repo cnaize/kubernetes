@@ -19,8 +19,8 @@ package limitranger
 import (
 	"testing"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/api/resource"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 func getResourceRequirements(cpu, memory string) api.ResourceRequirements {

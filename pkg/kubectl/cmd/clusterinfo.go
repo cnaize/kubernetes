@@ -21,9 +21,9 @@ import (
 	"io"
 	"strings"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/kubectl/cmd/util"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/kubectl/resource"
+	"github.com/cnaize/kubernetes/pkg/api"
 
 	"github.com/daviddengcn/go-colortext"
 	"github.com/spf13/cobra"

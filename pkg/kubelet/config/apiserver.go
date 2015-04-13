@@ -20,11 +20,11 @@ package config
 import (
 	"time"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/client"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/client/cache"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/fields"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/kubelet"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 // NewSourceApiserver creates a config source that watches and pulls from the apiserver.

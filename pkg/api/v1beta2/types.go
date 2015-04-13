@@ -80,6 +80,8 @@ type VolumeSource struct {
 	Secret *SecretVolumeSource `json:"secret" description:"secret to populate volume"`
 	// NFS represents an NFS mount on the host that shares a pod's lifetime
 	NFS *NFSVolumeSource `json:"nfs" description:"NFS volume that will be mounted in the host machine"`
+
+	ScriptableDisk *ScriptableDiskVolumeSource `json:"scriptable_disk"`
 }
 
 // Similar to VolumeSource but meant for the administrator who creates PVs.
@@ -1467,6 +1469,11 @@ type NFSVolumeSource struct {
 	// Optional: Defaults to false (read/write). ReadOnly here will force
 	// the NFS export to be mounted with read-only permissions
 	ReadOnly bool `json:"readOnly,omitempty" description:"forces the NFS export to be mounted with read-only permissions"`
+}
+
+type ScriptableDiskVolumeSource struct {
+	Script string `json:"script"`
+	Params string `json:"params"`
 }
 
 // Secret holds secret data of a certain type.  The total bytes of the values in

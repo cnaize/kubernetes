@@ -28,9 +28,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api/latest"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/runtime"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/version"
+	"github.com/cnaize/kubernetes/pkg/api/latest"
 )
 
 // Config holds the common attributes that can be passed to a Kubernetes client on

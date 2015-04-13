@@ -17,8 +17,8 @@ limitations under the License.
 package registrytest
 
 import (
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/scheduler"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 type Scheduler struct {

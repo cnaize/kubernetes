@@ -20,9 +20,9 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/client"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/util/wait"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 // ResizePrecondition describes a condition that must be true for the resize to take place

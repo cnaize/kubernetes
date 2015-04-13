@@ -20,9 +20,9 @@ import (
 	"os"
 	"os/signal"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/client/portforward"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/kubectl/cmd/util"
+	"github.com/cnaize/kubernetes/pkg/api"
 	"github.com/golang/glog"
 	"github.com/spf13/cobra"
 )

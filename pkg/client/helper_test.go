@@ -22,7 +22,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api/latest"
+	"github.com/cnaize/kubernetes/pkg/api/latest"
 )
 
 const (

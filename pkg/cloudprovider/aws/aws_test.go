@@ -24,8 +24,8 @@ import (
 	"github.com/mitchellh/goamz/aws"
 	"github.com/mitchellh/goamz/ec2"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/api/resource"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 func TestReadAWSCloudConfig(t *testing.T) {

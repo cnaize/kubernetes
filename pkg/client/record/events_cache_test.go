@@ -19,8 +19,8 @@ package record
 import (
 	"testing"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/util"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 func TestAddOrUpdateEventNoExisting(t *testing.T) {

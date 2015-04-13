@@ -20,8 +20,8 @@ package network
 // a fake host is created here that can be used by plugins for testing
 
 import (
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/client"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 type fakeNetworkHost struct {

@@ -21,8 +21,8 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/client"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 var testPod *api.Pod = &api.Pod{

@@ -19,9 +19,9 @@ package client
 import (
 	"testing"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/api/resource"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/api/testapi"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 func getNodesResourceName() string {

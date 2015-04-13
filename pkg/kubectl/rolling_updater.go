@@ -22,9 +22,9 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/client"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/util/wait"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 // RollingUpdater provides methods for updating replicated pods in a predictable,

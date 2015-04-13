@@ -19,8 +19,8 @@ package rest
 import (
 	"testing"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/api/errors"
+	"github.com/cnaize/kubernetes/pkg/api"
 )
 
 func TestCheckGeneratedNameError(t *testing.T) {

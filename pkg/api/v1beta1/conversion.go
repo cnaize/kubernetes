@@ -21,10 +21,10 @@ import (
 	"net"
 	"strconv"
 
-	newer "github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/api/resource"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/conversion"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/util"
+	newer "github.com/cnaize/kubernetes/pkg/api"
 )
 
 func init() {
@@ -1133,6 +1133,9 @@ func init() {
 			if err := s.Convert(&in.NFS, &out.NFS, 0); err != nil {
 				return err
 			}
+			if err := s.Convert(&in.ScriptableDisk, &out.ScriptableDisk, 0); err != nil {
+				return err
+			}
 			return nil
 		},
 		func(in *VolumeSource, out *newer.VolumeSource, s conversion.Scope) error {
@@ -1152,6 +1155,9 @@ func init() {
 				return err
 			}
 			if err := s.Convert(&in.NFS, &out.NFS, 0); err != nil {
+				return err
+			}
+			if err := s.Convert(&in.ScriptableDisk, &out.ScriptableDisk, 0); err != nil {
 				return err
 			}
 			return nil

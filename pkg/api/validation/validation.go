@@ -22,12 +22,12 @@ import (
 	"path"
 	"strings"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/api"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/api/resource"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/capabilities"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/labels"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/util"
 	errs "github.com/GoogleCloudPlatform/kubernetes/pkg/util/fielderrors"
+	"github.com/cnaize/kubernetes/pkg/api"
 
 	"github.com/golang/glog"
 )
@@ -305,6 +305,10 @@ func validateSource(source *api.VolumeSource) errs.ValidationErrorList {
 		numVolumes++
 		allErrs = append(allErrs, validateNFS(source.NFS).Prefix("nfs")...)
 	}
+	if source.ScriptableDisk != nil {
+		numVolumes++
+		allErrs = append(allErrs, validateScriptableDisk(source.ScriptableDisk).Prefix("scriptable_disk")...)
+	}
 	if numVolumes != 1 {
 		allErrs = append(allErrs, errs.NewFieldInvalid("", source, "exactly 1 volume type is required"))
 	}
@@ -359,6 +363,14 @@ func validateNFS(nfs *api.NFSVolumeSource) errs.ValidationErrorList {
 	}
 	if !path.IsAbs(nfs.Path) {
 		allErrs = append(allErrs, errs.NewFieldInvalid("path", nfs.Path, "must be an absolute path"))
+	}
+	return allErrs
+}
+
+func validateScriptableDisk(sd *api.ScriptableDiskVolumeSource) errs.ValidationErrorList {
+	allErrs := errs.ValidationErrorList{}
+	if sd.Script == "" {
+		allErrs = append(allErrs, errs.NewFieldRequired("script"))
 	}
 	return allErrs
 }
