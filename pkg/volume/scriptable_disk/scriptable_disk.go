@@ -50,7 +50,7 @@ func (plugin *scriptableDiskPlugin) Name() string {
 }
 
 func (plugin *scriptableDiskPlugin) CanSupport(spec *api.Volume) bool {
-	if spec.Source.ScriptableDisk != nil {
+	if spec.VolumeSource.ScriptableDisk != nil {
 		return true
 	}
 
@@ -58,9 +58,9 @@ func (plugin *scriptableDiskPlugin) CanSupport(spec *api.Volume) bool {
 }
 
 func (plugin *scriptableDiskPlugin) NewBuilder(spec *api.Volume, podRef *api.ObjectReference) (volume.Builder, error) {
-	return &scriptablePersistentDisk{
-		script:  spec.Source.ScriptableDisk.Script,
-		params:  spec.Source.ScriptableDisk.Params,
+	return &scriptableDisk{
+		script:  spec.VolumeSource.ScriptableDisk.Script,
+		params:  spec.VolumeSource.ScriptableDisk.Params,
 		podRef:  podRef,
 		volName: spec.Name,
 		plugin:  plugin,
