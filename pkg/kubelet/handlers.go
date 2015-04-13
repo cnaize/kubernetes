@@ -23,9 +23,9 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/types"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/util"
 	"github.com/cnaize/kubernetes/pkg/api"
+	"github.com/cnaize/kubernetes/pkg/types"
 	"github.com/golang/glog"
 )
 

@@ -20,9 +20,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/types"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/volume"
 	"github.com/cnaize/kubernetes/pkg/api"
+	"github.com/cnaize/kubernetes/pkg/types"
 )
 
 // Runtime interface defines the interfaces that should be implemented

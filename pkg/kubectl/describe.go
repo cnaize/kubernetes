@@ -26,8 +26,8 @@ import (
 
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/client"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/labels"
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/types"
 	"github.com/cnaize/kubernetes/pkg/api"
+	"github.com/cnaize/kubernetes/pkg/types"
 	"github.com/golang/glog"
 )
 

@@ -22,7 +22,7 @@ import (
 	"time"
 
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/kubelet/dockertools"
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/types"
+	"github.com/cnaize/kubernetes/pkg/types"
 	"github.com/fsouza/go-dockerclient"
 	"github.com/golang/glog"
 )

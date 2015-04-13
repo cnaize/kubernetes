@@ -19,9 +19,9 @@ package host_path
 import (
 	"fmt"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/types"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/volume"
 	"github.com/cnaize/kubernetes/pkg/api"
+	"github.com/cnaize/kubernetes/pkg/types"
 )
 
 // This is the primary entrypoint for volume plugins.

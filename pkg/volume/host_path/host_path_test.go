@@ -19,9 +19,9 @@ package host_path
 import (
 	"testing"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/types"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/volume"
 	"github.com/cnaize/kubernetes/pkg/api"
+	"github.com/cnaize/kubernetes/pkg/types"
 )
 
 func TestCanSupport(t *testing.T) {

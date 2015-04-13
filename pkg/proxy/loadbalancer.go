@@ -19,8 +19,8 @@ package proxy
 import (
 	"net"
 
-	"github.com/GoogleCloudPlatform/kubernetes/pkg/types"
 	"github.com/cnaize/kubernetes/pkg/api"
+	"github.com/cnaize/kubernetes/pkg/types"
 )
 
 // LoadBalancer is an interface for distributing incoming requests to service endpoints.
