@@ -196,7 +196,7 @@ type VolumeSource struct {
 	// NFS represents an NFS mount on the host that shares a pod's lifetime
 	NFS *NFSVolumeSource `json:"nfs"`
 
-	ScriptableDisk *ScriptableDiskVolumeSource `json:"scriptable_disk"`
+	ScriptableDisk *ScriptableDiskVolumeSource `json:"scriptableDisk"`
 }
 
 // Similar to VolumeSource but meant for the administrator who creates PVs.
