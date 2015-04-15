@@ -307,7 +307,7 @@ func validateSource(source *api.VolumeSource) errs.ValidationErrorList {
 	}
 	if source.ScriptableDisk != nil {
 		numVolumes++
-		allErrs = append(allErrs, validateScriptableDisk(source.ScriptableDisk).Prefix("scriptable_disk")...)
+		allErrs = append(allErrs, validateScriptableDisk(source.ScriptableDisk).Prefix("scriptableDisk")...)
 	}
 	if numVolumes != 1 {
 		allErrs = append(allErrs, errs.NewFieldInvalid("", source, "exactly 1 volume type is required"))
