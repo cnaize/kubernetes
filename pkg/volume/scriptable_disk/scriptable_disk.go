@@ -88,8 +88,6 @@ func (sd *scriptableDisk) SetUp() error {
 }
 
 func (sd *scriptableDisk) SetUpAt(dir string) error {
-	glog.Infoln("SCIPTABLE DISK SETUPING")
-
 	scriptParams, err := base64.StdEncoding.DecodeString(sd.params)
 	if err != nil {
 		return err
