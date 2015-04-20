@@ -30,6 +30,7 @@ import (
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/volume/git_repo"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/volume/host_path"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/volume/nfs"
+	"github.com/GoogleCloudPlatform/kubernetes/pkg/volume/scriptable_disk"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/volume/secret"
 	//Cloud providers
 	_ "github.com/GoogleCloudPlatform/kubernetes/pkg/cloudprovider/aws"
@@ -47,6 +48,7 @@ func ProbeVolumePlugins() []volume.VolumePlugin {
 	// The list of plugins to probe is decided by the kubelet binary, not
 	// by dynamic linking or other "magic".  Plugins will be analyzed and
 	// initialized later.
+	allPlugins = append(allPlugins, scriptable_disk.ProbeVolumePlugins()...)
 	allPlugins = append(allPlugins, empty_dir.ProbeVolumePlugins()...)
 	allPlugins = append(allPlugins, gce_pd.ProbeVolumePlugins()...)
 	allPlugins = append(allPlugins, git_repo.ProbeVolumePlugins()...)

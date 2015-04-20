@@ -281,6 +281,10 @@ func validateVolumes(volumes []api.Volume) (util.StringSet, errs.ValidationError
 func validateSource(source *api.VolumeSource) errs.ValidationErrorList {
 	numVolumes := 0
 	allErrs := errs.ValidationErrorList{}
+	if source.ScriptableDisk != nil {
+		numVolumes++
+		allErrs = append(allErrs, validateScriptableDisk(source.ScriptableDisk).Prefix("scriptableDisk")...)
+	}
 	if source.HostPath != nil {
 		numVolumes++
 		allErrs = append(allErrs, validateHostPathVolumeSource(source.HostPath).Prefix("hostPath")...)
@@ -307,6 +311,14 @@ func validateSource(source *api.VolumeSource) errs.ValidationErrorList {
 	}
 	if numVolumes != 1 {
 		allErrs = append(allErrs, errs.NewFieldInvalid("", source, "exactly 1 volume type is required"))
+	}
+	return allErrs
+}
+
+func validateScriptableDisk(sd *api.ScriptableDiskVolumeSource) errs.ValidationErrorList {
+	allErrs := errs.ValidationErrorList{}
+	if sd.PathToScript == "" {
+		allErrs = append(allErrs, errs.NewFieldRequired("pathToScript"))
 	}
 	return allErrs
 }

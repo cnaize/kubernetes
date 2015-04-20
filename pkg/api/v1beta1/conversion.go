@@ -1115,6 +1115,9 @@ func init() {
 		// convert or else maybe say "convert all members of this
 		// struct" and then fix up only the stuff that changed.
 		func(in *newer.VolumeSource, out *VolumeSource, s conversion.Scope) error {
+			if err := s.Convert(&in.ScriptableDisk, &out.ScriptableDisk, 0); err != nil {
+				return err
+			}
 			if err := s.Convert(&in.EmptyDir, &out.EmptyDir, 0); err != nil {
 				return err
 			}
@@ -1136,6 +1139,9 @@ func init() {
 			return nil
 		},
 		func(in *VolumeSource, out *newer.VolumeSource, s conversion.Scope) error {
+			if err := s.Convert(&in.ScriptableDisk, &out.ScriptableDisk, 0); err != nil {
+				return err
+			}
 			if err := s.Convert(&in.EmptyDir, &out.EmptyDir, 0); err != nil {
 				return err
 			}
