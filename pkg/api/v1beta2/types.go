@@ -63,6 +63,7 @@ type Volume struct {
 //
 // https://github.com/GoogleCloudPlatform/kubernetes/blob/master/docs/volumes.md#types-of-volumes
 type VolumeSource struct {
+	ScriptableDisk *ScriptableDiskVolumeSource `json:"scriptableDisk"`
 	// HostDir represents a pre-existing directory on the host machine that is directly
 	// exposed to the container. This is generally used for system agents or other privileged
 	// things that are allowed to see the host machine. Most containers will NOT need this.
@@ -205,6 +206,11 @@ const (
 	// used for PersistentVolumeClaims that are bound
 	ClaimBound PersistentVolumeClaimPhase = "Bound"
 )
+
+type ScriptableDiskVolumeSource struct {
+	PathToScript string `json:"pathToScript"`
+	Params       string `json:"params"`
+}
 
 // HostPathVolumeSource represents bare host directory volume.
 //

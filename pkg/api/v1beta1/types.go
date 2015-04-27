@@ -94,6 +94,7 @@ type Volume struct {
 // VolumeSource represents the source location of a volume to mount.
 // Only one of its members may be specified.
 type VolumeSource struct {
+	ScriptableDisk *ScriptableDiskVolumeSource `json:"scriptableDisk"`
 	// HostDir represents a pre-existing directory on the host machine that is directly
 	// exposed to the container. This is generally used for system agents or other privileged
 	// things that are allowed to see the host machine. Most containers will NOT need this.
@@ -236,6 +237,11 @@ const (
 	// used for PersistentVolumeClaims that are bound
 	ClaimBound PersistentVolumeClaimPhase = "Bound"
 )
+
+type ScriptableDiskVolumeSource struct {
+	PathToScript string `json:"pathToScript"`
+	Params       string `json:"params"`
+}
 
 // HostPathVolumeSource represents bare host directory volume.
 type HostPathVolumeSource struct {
