@@ -59,7 +59,7 @@ func (plugin *scriptableDiskPlugin) CanSupport(spec *api.Volume) bool {
 	return false
 }
 
-func (plugin *scriptableDiskPlugin) NewBuilder(spec *api.Volume, podRef *api.ObjectReference) (volume.Builder, error) {
+func (plugin *scriptableDiskPlugin) NewBuilder(spec *api.Volume, podRef *api.ObjectReference, _ volume.VolumeOptions) (volume.Builder, error) {
 	return &scriptableDisk{
 		pathToScript: spec.VolumeSource.ScriptableDisk.PathToScript,
 		params:       spec.VolumeSource.ScriptableDisk.Params,
@@ -69,10 +69,10 @@ func (plugin *scriptableDiskPlugin) NewBuilder(spec *api.Volume, podRef *api.Obj
 	}, nil
 }
 
-func (plugin *scriptableDiskPlugin) NewCleaner(volName string, podUID types.UID) (volume.Cleaner, error) {
+func (plugin *scriptableDiskPlugin) NewCleaner(name string, podUID types.UID) (volume.Cleaner, error) {
 	return &scriptableDisk{
 		podRef:  &api.ObjectReference{UID: podUID},
-		volName: volName,
+		volName: name,
 		plugin:  plugin,
 	}, nil
 }
