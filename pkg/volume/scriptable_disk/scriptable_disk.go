@@ -16,6 +16,8 @@ package scriptable_disk
 import (
 	"encoding/base64"
 	"fmt"
+	"io/ioutil"
+	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
@@ -40,7 +42,11 @@ var _ volume.VolumePlugin = &scriptableDiskPlugin{}
 
 const (
 	scriptableDiskPluginName = "kubernetes.io/scriptable-disk"
-	scriptsDir               = "/var/lib/kuberdock/scripts"
+)
+
+var (
+	scriptsDir    = filepath.Join("/", "var", "lib", "kuberdock", "scripts")
+	scriptsTmpDir = filepath.Join(scriptsDir, "tmp")
 )
 
 func (plugin *scriptableDiskPlugin) Init(host volume.VolumeHost) {
@@ -60,8 +66,24 @@ func (plugin *scriptableDiskPlugin) CanSupport(spec *api.Volume) bool {
 }
 
 func (plugin *scriptableDiskPlugin) NewBuilder(spec *api.Volume, podRef *api.ObjectReference, _ volume.VolumeOptions) (volume.Builder, error) {
+	pathToScript := spec.VolumeSource.ScriptableDisk.PathToScript
+	podUID := string(podRef.UID)
+
+	if _, err := os.Stat(scriptsTmpDir); os.IsNotExist(err) {
+		os.MkdirAll(scriptsTmpDir, 0744)
+	}
+
+	script, err := ioutil.ReadFile(filepath.Join(scriptsDir, pathToScript))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := ioutil.WriteFile(filepath.Join(scriptsTmpDir, podUID), script, 0744); err != nil {
+		return nil, err
+	}
+
 	return &scriptableDisk{
-		pathToScript: spec.VolumeSource.ScriptableDisk.PathToScript,
+		pathToScript: pathToScript,
 		params:       spec.VolumeSource.ScriptableDisk.Params,
 		podRef:       podRef,
 		volName:      spec.Name,
@@ -99,9 +121,9 @@ func (sd *scriptableDisk) SetUpAt(dir string) error {
 	params = append(params, strings.Split(string(scriptParams), ";")...)
 
 	if out, err := exec.Command("sh", params...).Output(); err != nil {
-		return fmt.Errorf("can't execute script: %v\n", err)
+		return fmt.Errorf("can't execute setup script: %v\n", err)
 	} else {
-		glog.Infof("script finished: %v\n", string(out))
+		glog.Infof("setup script finished: %v\n", string(out))
 	}
 
 	return nil
@@ -117,5 +139,19 @@ func (sd *scriptableDisk) TearDown() error {
 }
 
 func (sd *scriptableDisk) TearDownAt(dir string) error {
+	podUID := string(sd.podRef.UID)
+	pathToScript := filepath.Join(scriptsTmpDir, podUID)
+	params := []string{pathToScript, "umount", podUID}
+
+	if out, err := exec.Command("sh", params...).Output(); err != nil {
+		return fmt.Errorf("can't execute tear down script: %v\n", err)
+	} else {
+		glog.Infof("tear down script finished: %v\n", string(out))
+	}
+
+	if err := os.Remove(pathToScript); err != nil {
+		glog.Warningf("can't remove tmp script: %v, for podUID: %v\n", err, podUID)
+	}
+
 	return nil
 }
