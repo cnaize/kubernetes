@@ -59,10 +59,7 @@ func (plugin *awsElasticBlockStorePlugin) Name() string {
 }
 
 func (plugin *awsElasticBlockStorePlugin) CanSupport(spec *api.Volume) bool {
-	if spec.AWSElasticBlockStore != nil {
-		return true
-	}
-	return false
+	return spec.AWSElasticBlockStore != nil || spec.AWSElasticBlockStore != nil
 }
 
 func (plugin *awsElasticBlockStorePlugin) GetAccessModes() []api.AccessModeType {
@@ -77,13 +74,20 @@ func (plugin *awsElasticBlockStorePlugin) NewBuilder(spec *api.Volume, podRef *a
 }
 
 func (plugin *awsElasticBlockStorePlugin) newBuilderInternal(spec *api.Volume, podUID types.UID, manager pdManager, mounter mount.Interface) (volume.Builder, error) {
-	volumeID := spec.AWSElasticBlockStore.VolumeID
-	fsType := spec.AWSElasticBlockStore.FSType
-	partition := ""
-	if spec.AWSElasticBlockStore.Partition != 0 {
-		partition = strconv.Itoa(spec.AWSElasticBlockStore.Partition)
+	var ebs *api.AWSElasticBlockStoreVolumeSource
+	if spec.AWSElasticBlockStore != nil {
+		ebs = spec.AWSElasticBlockStore
+	} else {
+		ebs = spec.AWSElasticBlockStore
 	}
-	readOnly := spec.AWSElasticBlockStore.ReadOnly
+
+	volumeID := ebs.VolumeID
+	fsType := ebs.FSType
+	partition := ""
+	if ebs.Partition != 0 {
+		partition = strconv.Itoa(ebs.Partition)
+	}
+	readOnly := ebs.ReadOnly
 
 	return &awsElasticBlockStore{
 		podUID:      podUID,
