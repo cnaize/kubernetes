@@ -117,7 +117,7 @@ func (sd *scriptableDisk) SetUpAt(dir string) error {
 		return err
 	}
 
-	params := []string{filepath.Join(scriptsDir, sd.pathToScript)}
+	params := []string{filepath.Join(scriptsDir, sd.pathToScript), string(sd.podRef.UID)}
 	params = append(params, strings.Split(string(scriptParams), ";")...)
 
 	if out, err := exec.Command("sh", params...).Output(); err != nil {
