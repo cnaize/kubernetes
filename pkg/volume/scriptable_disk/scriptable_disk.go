@@ -59,6 +59,7 @@ func (plugin *scriptableDiskPlugin) Name() string {
 
 func (plugin *scriptableDiskPlugin) CanSupport(spec *api.Volume) bool {
 	if spec.VolumeSource.ScriptableDisk != nil {
+		glog.Infoln("using scriptable disk")
 		return true
 	}
 
