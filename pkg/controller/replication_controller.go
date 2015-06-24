@@ -190,13 +190,41 @@ func FilterActivePods(pods []api.Pod) []api.Pod {
 	return result
 }
 
+func filterActiveAndFailedPods(pods []api.Pod) []api.Pod {
+	var result []api.Pod
+	for _, value := range pods {
+		if api.PodFailed != value.Status.Phase {
+			result = append(result, value)
+		}
+	}
+	return result
+}
+
+func filterPods(pods []api.Pod, restartPolicy api.RestartPolicy) (filteredPods []api.Pod) {
+	switch restartPolicy {
+	case api.RestartPolicyAlways:
+		filteredPods = FilterActivePods(pods)
+		break
+	case api.RestartPolicyOnFailure:
+		filteredPods = filterActiveAndFailedPods(pods)
+		break
+	case api.RestartPolicyNever:
+		filteredPods = pods
+		break
+	default:
+		glog.Errorf("unsupported restart policy %v\n", restartPolicy)
+	}
+	return filteredPods
+}
+
 func (rm *ReplicationManager) syncReplicationController(controller api.ReplicationController) error {
 	s := labels.Set(controller.Spec.Selector).AsSelector()
 	podList, err := rm.kubeClient.Pods(controller.Namespace).List(s)
 	if err != nil {
 		return err
 	}
-	filteredList := FilterActivePods(podList.Items)
+	restartPolicy := controller.Spec.Template.Spec.RestartPolicy
+	filteredList := filterPods(podList.Items, restartPolicy)
 	activePods := len(filteredList)
 	diff := activePods - controller.Spec.Replicas
 	if diff < 0 {
