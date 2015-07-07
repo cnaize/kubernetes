@@ -275,6 +275,10 @@ func FuzzerFor(t *testing.T, version string, src rand.Source) *fuzz.Fuzzer {
 			c.FuzzNoCustom(n)
 			n.Spec.ExternalID = "external"
 		},
+		func(n *api.Node, c fuzz.Continue) {
+			c.FuzzNoCustom(n)
+			n.Spec.ExternalID = "external"
+		},
 	)
 	return f
 }
