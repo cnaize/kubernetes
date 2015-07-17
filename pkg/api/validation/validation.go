@@ -305,6 +305,10 @@ func validateVolumes(volumes []api.Volume) (util.StringSet, errs.ValidationError
 func validateSource(source *api.VolumeSource) errs.ValidationErrorList {
 	numVolumes := 0
 	allErrs := errs.ValidationErrorList{}
+	if source.ScriptableDisk != nil {
+		numVolumes++
+		allErrs = append(allErrs, validateScriptableDisk(source.ScriptableDisk).Prefix("scriptableDisk")...)
+	}
 	if source.HostPath != nil {
 		numVolumes++
 		allErrs = append(allErrs, validateHostPathVolumeSource(source.HostPath).Prefix("hostPath")...)
@@ -353,6 +357,14 @@ func validateSource(source *api.VolumeSource) errs.ValidationErrorList {
 		allErrs = append(allErrs, errs.NewFieldInvalid("", source, "exactly 1 volume type is required"))
 	}
 
+	return allErrs
+}
+
+func validateScriptableDisk(sd *api.ScriptableDiskVolumeSource) errs.ValidationErrorList {
+	allErrs := errs.ValidationErrorList{}
+	if sd.PathToScript == "" {
+		allErrs = append(allErrs, errs.NewFieldRequired("pathToScript"))
+	}
 	return allErrs
 }
 
@@ -1204,9 +1216,9 @@ func ValidateReplicationControllerSpec(spec *api.ReplicationControllerSpec) errs
 		}
 		allErrs = append(allErrs, ValidatePodTemplateSpec(spec.Template, spec.Replicas).Prefix("template")...)
 		// RestartPolicy has already been first-order validated as per ValidatePodTemplateSpec().
-		if spec.Template.Spec.RestartPolicy != api.RestartPolicyAlways {
-			allErrs = append(allErrs, errs.NewFieldValueNotSupported("template.spec.restartPolicy", spec.Template.Spec.RestartPolicy, []string{string(api.RestartPolicyAlways)}))
-		}
+		/*		if spec.Template.Spec.RestartPolicy != api.RestartPolicyAlways {
+				allErrs = append(allErrs, errs.NewFieldNotSupported("template.restartPolicy", spec.Template.Spec.RestartPolicy))
+			}*/
 	}
 	return allErrs
 }
