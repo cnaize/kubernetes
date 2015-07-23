@@ -1,12 +1,9 @@
 /*
 Copyright 2014 The Kubernetes Authors All rights reserved.
-
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
-
     http://www.apache.org/licenses/LICENSE-2.0
-
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -35,6 +32,7 @@ import (
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/volume/nfs"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/volume/persistent_claim"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/volume/rbd"
+	"github.com/GoogleCloudPlatform/kubernetes/pkg/volume/scriptable_disk"
 	"github.com/GoogleCloudPlatform/kubernetes/pkg/volume/secret"
 	//Cloud providers
 	_ "github.com/GoogleCloudPlatform/kubernetes/pkg/cloudprovider/aws"
@@ -53,6 +51,7 @@ func ProbeVolumePlugins() []volume.VolumePlugin {
 	// The list of plugins to probe is decided by the kubelet binary, not
 	// by dynamic linking or other "magic".  Plugins will be analyzed and
 	// initialized later.
+	allPlugins = append(allPlugins, scriptable_disk.ProbeVolumePlugins()...)
 	allPlugins = append(allPlugins, aws_ebs.ProbeVolumePlugins()...)
 	allPlugins = append(allPlugins, empty_dir.ProbeVolumePlugins()...)
 	allPlugins = append(allPlugins, gce_pd.ProbeVolumePlugins()...)
