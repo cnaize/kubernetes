@@ -314,6 +314,35 @@ func filterActivePods(pods []api.Pod) []*api.Pod {
 	return result
 }
 
+func filterActiveAndFailedPods(pods []api.Pod) []*api.Pod {
+	var result []*api.Pod
+	for i := range pods {
+		if api.PodFailed != pods[i].Status.Phase {
+			result = append(result, &pods[i])
+		}
+	}
+	return result
+}
+
+func filterPods(pods []api.Pod, restartPolicy api.RestartPolicy) (filteredPods []*api.Pod) {
+	switch restartPolicy {
+	case api.RestartPolicyAlways:
+		filteredPods = filterActivePods(pods)
+		break
+	case api.RestartPolicyOnFailure:
+		filteredPods = filterActiveAndFailedPods(pods)
+		break
+	case api.RestartPolicyNever:
+		for i := range pods {
+			filteredPods = append(filteredPods, &pods[i])
+		}
+		break
+	default:
+		glog.Errorf("unsupported restart policy %v\n", restartPolicy)
+	}
+	return filteredPods
+}
+
 // updateReplicaCount attempts to update the Status.Replicas of the given controller, with a single GET/PUT retry.
 func updateReplicaCount(rcClient client.ReplicationControllerInterface, controller api.ReplicationController, numReplicas int) (updateErr error) {
 	// This is the steady state. It happens when the rc doesn't have any expectations, since

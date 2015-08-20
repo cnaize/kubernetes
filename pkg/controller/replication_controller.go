@@ -397,7 +397,8 @@ func (rm *ReplicationManager) syncReplicationController(key string) error {
 	}
 
 	// TODO: Do this in a single pass, or use an index.
-	filteredPods := filterActivePods(podList.Items)
+	restartPolicy := controller.Spec.Template.Spec.RestartPolicy
+	filteredPods := filterPods(podList.Items, restartPolicy)
 	if rcNeedsSync {
 		rm.manageReplicas(filteredPods, &controller)
 	}
