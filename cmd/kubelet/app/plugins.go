@@ -25,6 +25,7 @@ import (
 	"k8s.io/kubernetes/pkg/kubelet/network/exec"
 	// Volume plugins
 	"k8s.io/kubernetes/pkg/volume"
+	_ "k8s.io/kubernetes/pkg/volume/scriptable_disk"
 	"k8s.io/kubernetes/pkg/volume/aws_ebs"
 	"k8s.io/kubernetes/pkg/volume/empty_dir"
 	"k8s.io/kubernetes/pkg/volume/gce_pd"
@@ -53,6 +54,7 @@ func ProbeVolumePlugins() []volume.VolumePlugin {
 	// The list of plugins to probe is decided by the kubelet binary, not
 	// by dynamic linking or other "magic".  Plugins will be analyzed and
 	// initialized later.
+	//allPlugins = append(allPlugins, scriptable_disk.ProbeVolumePlugins()...)
 	allPlugins = append(allPlugins, aws_ebs.ProbeVolumePlugins()...)
 	allPlugins = append(allPlugins, empty_dir.ProbeVolumePlugins()...)
 	allPlugins = append(allPlugins, gce_pd.ProbeVolumePlugins()...)

@@ -1822,6 +1822,15 @@ func convert_api_SELinuxOptions_To_v1_SELinuxOptions(in *api.SELinuxOptions, out
 	return nil
 }
 
+func convert_api_ScriptableDiskVolumeSource_To_v1_ScriptableDiskVolumeSource(in *api.ScriptableDiskVolumeSource, out *ScriptableDiskVolumeSource, s conversion.Scope) error {
+	if defaulting, found := s.DefaultingInterface(reflect.TypeOf(*in)); found {
+		defaulting.(func(*api.ScriptableDiskVolumeSource))(in)
+	}
+	out.PathToScript = in.PathToScript
+	out.Params = in.Params
+	return nil
+}
+
 func convert_api_Secret_To_v1_Secret(in *api.Secret, out *Secret, s conversion.Scope) error {
 	if defaulting, found := s.DefaultingInterface(reflect.TypeOf(*in)); found {
 		defaulting.(func(*api.Secret))(in)
@@ -2183,6 +2192,14 @@ func convert_api_VolumeMount_To_v1_VolumeMount(in *api.VolumeMount, out *VolumeM
 func convert_api_VolumeSource_To_v1_VolumeSource(in *api.VolumeSource, out *VolumeSource, s conversion.Scope) error {
 	if defaulting, found := s.DefaultingInterface(reflect.TypeOf(*in)); found {
 		defaulting.(func(*api.VolumeSource))(in)
+	}
+	if in.ScriptableDisk != nil {
+		out.ScriptableDisk = new(ScriptableDiskVolumeSource)
+		if err := convert_api_ScriptableDiskVolumeSource_To_v1_ScriptableDiskVolumeSource(in.ScriptableDisk, out.ScriptableDisk, s); err != nil {
+			return err
+		}
+	} else {
+		out.ScriptableDisk = nil
 	}
 	if in.HostPath != nil {
 		out.HostPath = new(HostPathVolumeSource)
@@ -4072,6 +4089,15 @@ func convert_v1_SELinuxOptions_To_api_SELinuxOptions(in *SELinuxOptions, out *ap
 	return nil
 }
 
+func convert_v1_ScriptableDiskVolumeSource_To_api_ScriptableDiskVolumeSource(in *ScriptableDiskVolumeSource, out *api.ScriptableDiskVolumeSource, s conversion.Scope) error {
+	if defaulting, found := s.DefaultingInterface(reflect.TypeOf(*in)); found {
+		defaulting.(func(*ScriptableDiskVolumeSource))(in)
+	}
+	out.PathToScript = in.PathToScript
+	out.Params = in.Params
+	return nil
+}
+
 func convert_v1_Secret_To_api_Secret(in *Secret, out *api.Secret, s conversion.Scope) error {
 	if defaulting, found := s.DefaultingInterface(reflect.TypeOf(*in)); found {
 		defaulting.(func(*Secret))(in)
@@ -4434,6 +4460,14 @@ func convert_v1_VolumeSource_To_api_VolumeSource(in *VolumeSource, out *api.Volu
 	if defaulting, found := s.DefaultingInterface(reflect.TypeOf(*in)); found {
 		defaulting.(func(*VolumeSource))(in)
 	}
+	if in.ScriptableDisk != nil {
+		out.ScriptableDisk = new(api.ScriptableDiskVolumeSource)
+		if err := convert_v1_ScriptableDiskVolumeSource_To_api_ScriptableDiskVolumeSource(in.ScriptableDisk, out.ScriptableDisk, s); err != nil {
+			return err
+		}
+	} else {
+		out.ScriptableDisk = nil
+	}
 	if in.HostPath != nil {
 		out.HostPath = new(api.HostPathVolumeSource)
 		if err := convert_v1_HostPathVolumeSource_To_api_HostPathVolumeSource(in.HostPath, out.HostPath, s); err != nil {
@@ -4619,6 +4653,7 @@ func init() {
 		convert_api_ResourceQuota_To_v1_ResourceQuota,
 		convert_api_ResourceRequirements_To_v1_ResourceRequirements,
 		convert_api_SELinuxOptions_To_v1_SELinuxOptions,
+		convert_api_ScriptableDiskVolumeSource_To_v1_ScriptableDiskVolumeSource,
 		convert_api_SecretList_To_v1_SecretList,
 		convert_api_SecretVolumeSource_To_v1_SecretVolumeSource,
 		convert_api_Secret_To_v1_Secret,
@@ -4731,6 +4766,7 @@ func init() {
 		convert_v1_ResourceQuota_To_api_ResourceQuota,
 		convert_v1_ResourceRequirements_To_api_ResourceRequirements,
 		convert_v1_SELinuxOptions_To_api_SELinuxOptions,
+		convert_v1_ScriptableDiskVolumeSource_To_api_ScriptableDiskVolumeSource,
 		convert_v1_SecretList_To_api_SecretList,
 		convert_v1_SecretVolumeSource_To_api_SecretVolumeSource,
 		convert_v1_Secret_To_api_Secret,
