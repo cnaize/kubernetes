@@ -992,6 +992,7 @@ func ValidatePodUpdate(newPod, oldPod *api.Pod) errs.ValidationErrorList {
 	var newContainers []api.Container
 	for ix, container := range pod.Spec.Containers {
 		container.Image = oldPod.Spec.Containers[ix].Image
+		container.Resources.Limits = oldPod.Spec.Containers[ix].Resources.Limits
 		newContainers = append(newContainers, container)
 	}
 	pod.Spec.Containers = newContainers

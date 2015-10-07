@@ -18,9 +18,15 @@ package dockertools
 
 import (
 	"fmt"
+	"strings"
 
-	docker "github.com/fsouza/go-dockerclient"
+	docker "github.com/cnaize/go-dockerclient"
+	"k8s.io/kubernetes/pkg/api"
+	"k8s.io/kubernetes/pkg/api/resource"
+	kubeclient "k8s.io/kubernetes/pkg/client"
+	"k8s.io/kubernetes/pkg/fields"
 	kubecontainer "k8s.io/kubernetes/pkg/kubelet/container"
+	"k8s.io/kubernetes/pkg/labels"
 	"k8s.io/kubernetes/pkg/types"
 )
 
@@ -28,16 +34,52 @@ import (
 // (kubecontainer) types.
 
 // Converts docker.APIContainers to kubecontainer.Container.
-func toRuntimeContainer(c *docker.APIContainers) (*kubecontainer.Container, error) {
+func toRuntimeContainer(client DockerInterface, kc kubeclient.Interface, c *docker.APIContainers) (*kubecontainer.Container, error) {
 	if c == nil {
 		return nil, fmt.Errorf("unable to convert a nil pointer to a runtime container")
+	}
+
+	inspectResult, err := client.InspectContainer(c.ID)
+	if err != nil {
+		return nil, err
 	}
 
 	dockerName, hash, err := getDockerContainerNameInfo(c)
 	if err != nil {
 		return nil, err
 	}
+
+	hostConfig := inspectResult.HostConfig
+	limits := make(api.ResourceList)
+	limits[api.ResourceMemory] = *resource.NewQuantity(hostConfig.Memory, resource.DecimalSI)
+	limits[api.ResourceCPU] = *resource.NewMilliQuantity(SharesToMulliCPU(hostConfig.CPUShares), resource.DecimalSI)
+
+	if dockerName.ContainerName != "POD" {
+		nameNamespace := strings.Split(dockerName.PodFullName, "_")
+
+		pods, err := kc.Pods(nameNamespace[1]).
+			List(labels.Everything(), fields.OneTermEqualSelector(kubeclient.ObjectNameField, nameNamespace[0]))
+		if err != nil {
+			return nil, err
+		}
+
+		if len(pods.Items) == 1 {
+			var container *api.Container
+			for _, cr := range pods.Items[0].Spec.Containers {
+				if cr.Name == dockerName.ContainerName {
+					container = &cr
+					break
+				}
+			}
+
+			if container != nil {
+				hash = kubecontainer.HashContainer(container)
+			}
+		}
+	}
+
 	return &kubecontainer.Container{
+		Limits:  limits,
 		ID:      types.UID(c.ID),
 		Name:    dockerName.ContainerName,
 		Image:   c.Image,

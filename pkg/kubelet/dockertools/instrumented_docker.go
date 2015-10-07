@@ -19,7 +19,7 @@ package dockertools
 import (
 	"time"
 
-	docker "github.com/fsouza/go-dockerclient"
+	docker "github.com/cnaize/go-dockerclient"
 	"k8s.io/kubernetes/pkg/kubelet/metrics"
 )
 
@@ -44,6 +44,15 @@ func recordError(operation string, err error) {
 	if err != nil {
 		metrics.DockerErrors.WithLabelValues(operation).Inc()
 	}
+}
+
+func (in instrumentedDockerInterface) SetContainer(id string, hostConfig *docker.HostConfig) error {
+	const operation = "set_container"
+	defer recordOperation(operation, time.Now())
+
+	err := in.client.SetContainer(id, hostConfig)
+	recordError(operation, err)
+	return err
 }
 
 func (in instrumentedDockerInterface) ListContainers(options docker.ListContainersOptions) ([]docker.APIContainers, error) {

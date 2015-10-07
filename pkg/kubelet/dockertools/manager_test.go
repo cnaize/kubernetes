@@ -30,7 +30,7 @@ import (
 	"testing"
 	"time"
 
-	docker "github.com/fsouza/go-dockerclient"
+	docker "github.com/cnaize/go-dockerclient"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/testapi"
 	"k8s.io/kubernetes/pkg/client/record"
@@ -318,7 +318,7 @@ func TestGetPods(t *testing.T) {
 	// because the conversion is tested separately in convert_test.go
 	containers := make([]*kubecontainer.Container, len(dockerContainers))
 	for i := range containers {
-		c, err := toRuntimeContainer(&dockerContainers[i])
+		c, err := toRuntimeContainer(fakeDocker, &dockerContainers[i])
 		if err != nil {
 			t.Fatalf("unexpected error %v", err)
 		}

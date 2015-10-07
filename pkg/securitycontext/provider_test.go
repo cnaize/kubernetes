@@ -24,7 +24,7 @@ import (
 
 	"k8s.io/kubernetes/pkg/api"
 
-	docker "github.com/fsouza/go-dockerclient"
+	docker "github.com/cnaize/go-dockerclient"
 )
 
 func TestModifyContainerConfig(t *testing.T) {

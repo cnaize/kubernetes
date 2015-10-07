@@ -19,6 +19,8 @@ package container
 import (
 	"sync"
 	"time"
+
+	"github.com/golang/glog"
 )
 
 var (
@@ -99,6 +101,7 @@ func (r *runtimeCache) ForceUpdateIfOlder(minExpectedCacheTime time.Time) error 
 }
 
 func (r *runtimeCache) updateCache() error {
+	glog.Warningln("UPDATING CACHE")
 	pods, timestamp, err := r.getPodsWithTimestamp()
 	if err != nil {
 		return err

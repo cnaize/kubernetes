@@ -31,11 +31,12 @@ import (
 	"sync"
 	"time"
 
-	docker "github.com/fsouza/go-dockerclient"
+	docker "github.com/cnaize/go-dockerclient"
 	"github.com/golang/glog"
 	"github.com/golang/groupcache/lru"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/api/latest"
+	kubeclient "k8s.io/kubernetes/pkg/client"
 	"k8s.io/kubernetes/pkg/client/record"
 	kubecontainer "k8s.io/kubernetes/pkg/kubelet/container"
 	"k8s.io/kubernetes/pkg/kubelet/lifecycle"
@@ -71,6 +72,7 @@ var _ kubecontainer.Runtime = &DockerManager{}
 
 type DockerManager struct {
 	client              DockerInterface
+	kc                  kubeclient.Interface
 	recorder            record.EventRecorder
 	readinessManager    *kubecontainer.ReadinessManager
 	containerRefManager *kubecontainer.RefManager
@@ -118,6 +120,7 @@ type DockerManager struct {
 
 func NewDockerManager(
 	client DockerInterface,
+	kc kubeclient.Interface,
 	recorder record.EventRecorder,
 	readinessManager *kubecontainer.ReadinessManager,
 	containerRefManager *kubecontainer.RefManager,
@@ -165,6 +168,7 @@ func NewDockerManager(
 
 	dm := &DockerManager{
 		client:              client,
+		kc:                  kc,
 		recorder:            recorder,
 		readinessManager:    readinessManager,
 		containerRefManager: containerRefManager,
@@ -579,7 +583,7 @@ func (dm *DockerManager) runContainer(
 		}
 	}
 	memoryLimit := container.Resources.Limits.Memory().Value()
-	cpuShares := milliCPUToShares(container.Resources.Limits.Cpu().MilliValue())
+	cpuShares := MilliCPUToShares(container.Resources.Limits.Cpu().MilliValue())
 	dockerOpts := docker.CreateContainerOptions{
 		Name: BuildDockerName(dockerName, container),
 		Config: &docker.Config{
@@ -711,7 +715,7 @@ func (dm *DockerManager) GetContainers(all bool) ([]*kubecontainer.Container, er
 	// Convert DockerContainers to []*kubecontainer.Container
 	result := make([]*kubecontainer.Container, 0, len(containers))
 	for _, c := range containers {
-		converted, err := toRuntimeContainer(c)
+		converted, err := toRuntimeContainer(dm.client, dm.kc, c)
 		if err != nil {
 			glog.Errorf("Error examining the container: %v", err)
 			continue
@@ -736,7 +740,7 @@ func (dm *DockerManager) GetPods(all bool) ([]*kubecontainer.Pod, error) {
 
 	// Group containers by pod.
 	for _, c := range containers {
-		converted, err := toRuntimeContainer(c)
+		converted, err := toRuntimeContainer(dm.client, dm.kc, c)
 		if err != nil {
 			glog.Errorf("Error examining the container: %v", err)
 			continue
@@ -1392,8 +1396,6 @@ func (dm *DockerManager) computePodContainerChanges(pod *api.Pod, runningPod kub
 	}
 
 	for index, container := range pod.Spec.Containers {
-		expectedHash := kubecontainer.HashContainer(&container)
-
 		c := runningPod.FindContainerByName(container.Name)
 		if c == nil {
 			if kubecontainer.ShouldContainerBeRestarted(&container, pod, &podStatus, dm.readinessManager) {
@@ -1405,6 +1407,7 @@ func (dm *DockerManager) computePodContainerChanges(pod *api.Pod, runningPod kub
 			}
 			continue
 		}
+		expectedHash := kubecontainer.HashContainer(&container)
 
 		containerID := kubeletTypes.DockerID(c.ID)
 		hash := c.Hash

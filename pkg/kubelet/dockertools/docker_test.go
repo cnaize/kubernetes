@@ -25,8 +25,8 @@ import (
 	"strings"
 	"testing"
 
+	docker "github.com/cnaize/go-dockerclient"
 	"github.com/docker/docker/pkg/jsonmessage"
-	docker "github.com/fsouza/go-dockerclient"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/client/record"
 	"k8s.io/kubernetes/pkg/credentialprovider"

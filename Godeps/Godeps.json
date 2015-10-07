@@ -1,5 +1,5 @@
 {
-	"ImportPath": "github.com/GoogleCloudPlatform/kubernetes",
+	"ImportPath": "k8s.io/kubernetes",
 	"GoVersion": "go1.4.2",
 	"Packages": [
 		"./..."
@@ -33,6 +33,11 @@
 			"ImportPath": "code.google.com/p/google-api-go-client/googleapi",
 			"Comment": "release-96",
 			"Rev": "98c78185197025f935947caac56a7b6d022f89d2"
+		},
+		{
+			"ImportPath": "github.com/GoogleCloudPlatform/kubernetes/pkg/api/resource",
+			"Comment": "v1.0.6-33-gb3e3b38",
+			"Rev": "b3e3b386c9492926db45299865cbd93d950925fb"
 		},
 		{
 			"ImportPath": "github.com/Sirupsen/logrus",
@@ -108,6 +113,10 @@
 			"Rev": "b965b613227fddccbfffe13eae360ed3fa822f8d"
 		},
 		{
+			"ImportPath": "github.com/cnaize/go-dockerclient",
+			"Rev": "4c2ebc58c7f5162a76c0f1243ed1274fed25fbce"
+		},
+		{
 			"ImportPath": "github.com/codegangsta/negroni",
 			"Comment": "v0.1-62-g8d75e11",
 			"Rev": "8d75e11374a1928608c906fe745b538483e7aeb2"
@@ -137,7 +146,7 @@
 			"Rev": "97e243d21a8e232e9d8af38ba2366dfcfceebeba"
 		},
 		{
-			"ImportPath": "github.com/cpuguy83/go-md2man",
+			"ImportPath": "github.com/cpuguy83/go-md2man/mangen",
 			"Comment": "v1.0.2-5-g2831f11",
 			"Rev": "2831f11f66ff4008f10e2cd7ed9a85e3d3fc2bed"
 		},

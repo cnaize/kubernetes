@@ -316,6 +316,8 @@ func (s *KubeletServer) Run(_ []string) error {
 		mounter = mount.NewNsenterMounter()
 	}
 
+	glog.Warningf("KUBELET SERVER USING: %v", s.DockerExecHandlerName)
+
 	var dockerExecHandler dockertools.ExecHandler
 	switch s.DockerExecHandlerName {
 	case "native":

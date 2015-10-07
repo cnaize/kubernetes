@@ -161,6 +161,7 @@ func (c *ContainerID) UnmarshalJSON(data []byte) error {
 // Container provides the runtime information for a container, such as ID, hash,
 // status of the container.
 type Container struct {
+	Limits api.ResourceList
 	// The ID of the container, used by the container runtime to identify
 	// a container.
 	ID types.UID
@@ -297,6 +298,7 @@ func (p *Pod) ToAPIPod() *api.Pod {
 		var container api.Container
 		container.Name = c.Name
 		container.Image = c.Image
+		container.Resources.Limits = c.Limits
 		pod.Spec.Containers = append(pod.Spec.Containers, container)
 	}
 	return &pod

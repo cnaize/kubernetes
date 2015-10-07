@@ -33,6 +33,7 @@ import (
 	"sync"
 	"time"
 
+	docker "github.com/cnaize/go-dockerclient"
 	"github.com/golang/glog"
 	"k8s.io/kubernetes/pkg/api"
 	apierrors "k8s.io/kubernetes/pkg/api/errors"
@@ -280,6 +281,7 @@ func NewMainKubelet(
 		// Only supported one for now, continue.
 		klet.containerRuntime = dockertools.NewDockerManager(
 			dockerClient,
+			kubeClient,
 			recorder,
 			readinessManager,
 			containerRefManager,
@@ -1128,7 +1130,49 @@ func (kl *Kubelet) makePodDataDirs(pod *api.Pod) error {
 	return nil
 }
 
+func (kl *Kubelet) updateLimits(pod *api.Pod, runningPod kubecontainer.Pod) error {
+	for _, container := range pod.Spec.Containers {
+		c := runningPod.FindContainerByName(container.Name)
+		if c == nil || c.Limits == nil {
+			continue
+		}
+
+		oldLimits := c.Limits
+		newLimits := container.Resources.Limits
+		oldMemory := oldLimits.Memory()
+		newMemory := newLimits.Memory()
+		oldCpu := oldLimits.Cpu()
+		newCpu := newLimits.Cpu()
+		if (oldMemory.Value() != newMemory.Value()) || (oldCpu.MilliValue() != newCpu.MilliValue()) {
+			var hostConfig docker.HostConfig
+			if oldMemory.Value() != newMemory.Value() {
+				hostConfig.Memory = newMemory.Value()
+				c.Limits[api.ResourceMemory] = *newMemory
+			}
+
+			if oldCpu.MilliValue() != newCpu.MilliValue() {
+				hostConfig.CPUShares = dockertools.MilliCPUToShares(newCpu.MilliValue())
+				c.Limits[api.ResourceCPU] = *newCpu
+			}
+
+			if err := kl.dockerClient.SetContainer(string(c.ID), &hostConfig); err != nil {
+				return err
+			}
+
+			c.Hash = kubecontainer.HashContainer(&container)
+		}
+	}
+
+	return nil
+}
+
 func (kl *Kubelet) syncPod(pod *api.Pod, mirrorPod *api.Pod, runningPod kubecontainer.Pod, updateType SyncPodType) error {
+	if updateType == SyncPodUpdate {
+		if err := kl.updateLimits(pod, runningPod); err != nil {
+			glog.Warningf("update limits failed: %+v\n", err)
+		}
+	}
+
 	podFullName := kubecontainer.GetPodFullName(pod)
 	uid := pod.UID
 	start := time.Now()

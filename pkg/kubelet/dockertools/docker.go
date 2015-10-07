@@ -18,6 +18,7 @@ package dockertools
 
 import (
 	"fmt"
+	"math"
 	"math/rand"
 	"net/http"
 	"os"
@@ -25,9 +26,9 @@ import (
 	"strconv"
 	"strings"
 
+	docker "github.com/cnaize/go-dockerclient"
 	"github.com/docker/docker/pkg/jsonmessage"
 	"github.com/docker/docker/pkg/parsers"
-	docker "github.com/fsouza/go-dockerclient"
 	"github.com/golang/glog"
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/credentialprovider"
@@ -55,6 +56,7 @@ const (
 
 // DockerInterface is an abstract interface for testability.  It abstracts the interface of docker.Client.
 type DockerInterface interface {
+	SetContainer(id string, hostConfig *docker.HostConfig) error
 	ListContainers(options docker.ListContainersOptions) ([]docker.APIContainers, error)
 	InspectContainer(id string) (*docker.Container, error)
 	CreateContainer(docker.CreateContainerOptions) (*docker.Container, error)
@@ -310,7 +312,7 @@ func ConnectToDockerOrDie(dockerEndpoint string) DockerInterface {
 	return client
 }
 
-func milliCPUToShares(milliCPU int64) int64 {
+func MilliCPUToShares(milliCPU int64) int64 {
 	if milliCPU == 0 {
 		// Docker converts zero milliCPU to unset, which maps to kernel default
 		// for unset: 1024. Return 2 here to really match kernel default for
@@ -323,6 +325,10 @@ func milliCPUToShares(milliCPU int64) int64 {
 		return minShares
 	}
 	return shares
+}
+
+func SharesToMulliCPU(shares int64) int64 {
+	return int64(math.Ceil(float64(shares) * milliCPUToCPU / sharesPerCPU))
 }
 
 // GetKubeletDockerContainers lists all container or just the running ones.

@@ -24,7 +24,7 @@ import (
 	"sort"
 	"sync"
 
-	docker "github.com/fsouza/go-dockerclient"
+	docker "github.com/cnaize/go-dockerclient"
 
 	"k8s.io/kubernetes/pkg/api"
 	"k8s.io/kubernetes/pkg/util"
@@ -133,6 +133,13 @@ func (f *FakeDockerClient) popError(op string) error {
 	} else {
 		return nil
 	}
+}
+
+func (f *FakeDockerClient) SetContainer(id string, hostConfig *docker.HostConfig) error {
+	f.Lock()
+	defer f.Unlock()
+
+	return nil
 }
 
 // ListContainers is a test-spy implementation of DockerInterface.ListContainers.
