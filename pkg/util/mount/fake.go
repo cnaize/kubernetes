@@ -70,3 +70,12 @@ func (f *FakeMounter) IsMountPoint(file string) (bool, error) {
 	}
 	return false, nil
 }
+
+func (f *FakeMounter) IsLikelyNotMountPoint(file string) (bool, error) {
+	for _, mp := range f.MountPoints {
+		if mp.Path == file {
+			return false, nil
+		}
+	}
+	return true, nil
+}

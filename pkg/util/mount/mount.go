@@ -32,6 +32,8 @@ type Interface interface {
 	List() ([]MountPoint, error)
 	// IsMountPoint determines if a directory is a mountpoint.
 	IsMountPoint(file string) (bool, error)
+	// IsLikelyNotMountPoint determines if a directory is a mountpoint.
+	IsLikelyNotMountPoint(file string) (bool, error)
 }
 
 // This represents a single line in /proc/mounts or /etc/fstab.
