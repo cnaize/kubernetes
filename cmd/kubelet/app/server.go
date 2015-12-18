@@ -66,6 +66,7 @@ const defaultRootDir = "/var/lib/kubelet"
 type KubeletServer struct {
 	Config                         string
 	SyncFrequency                  time.Duration
+	ContainerGCInterval            time.Duration
 	FileCheckFrequency             time.Duration
 	HTTPCheckFrequency             time.Duration
 	ManifestURL                    string
@@ -147,6 +148,7 @@ type KubeletBuilder func(kc *KubeletConfig) (KubeletBootstrap, *config.PodConfig
 func NewKubeletServer() *KubeletServer {
 	return &KubeletServer{
 		SyncFrequency:               10 * time.Second,
+		ContainerGCInterval:         10 * time.Second,
 		FileCheckFrequency:          20 * time.Second,
 		HTTPCheckFrequency:          20 * time.Second,
 		EnableServer:                true,
@@ -189,6 +191,7 @@ func NewKubeletServer() *KubeletServer {
 func (s *KubeletServer) AddFlags(fs *pflag.FlagSet) {
 	fs.StringVar(&s.Config, "config", s.Config, "Path to the config file or directory of files")
 	fs.DurationVar(&s.SyncFrequency, "sync-frequency", s.SyncFrequency, "Max period between synchronizing running containers and config")
+	fs.DurationVar(&s.ContainerGCInterval, "container-gc-frequency", s.ContainerGCInterval, "Max perios between garbage collection containers")
 	fs.DurationVar(&s.FileCheckFrequency, "file-check-frequency", s.FileCheckFrequency, "Duration between checking config files for new data")
 	fs.DurationVar(&s.HTTPCheckFrequency, "http-check-frequency", s.HTTPCheckFrequency, "Duration between checking http for new data")
 	fs.StringVar(&s.ManifestURL, "manifest-url", s.ManifestURL, "URL for accessing the container manifest")
@@ -342,6 +345,7 @@ func (s *KubeletServer) Run(_ []string) error {
 		HTTPCheckFrequency:             s.HTTPCheckFrequency,
 		PodInfraContainerImage:         s.PodInfraContainerImage,
 		SyncFrequency:                  s.SyncFrequency,
+		ContainerGCInterval:            s.ContainerGCInterval,
 		RegistryPullQPS:                s.RegistryPullQPS,
 		RegistryBurst:                  s.RegistryBurst,
 		MinimumGCAge:                   s.MinimumGCAge,
@@ -548,6 +552,7 @@ func SimpleKubelet(client *client.Client,
 		HTTPCheckFrequency:      1 * time.Second,
 		FileCheckFrequency:      1 * time.Second,
 		SyncFrequency:           3 * time.Second,
+		ContainerGCInterval:     3 * time.Second,
 		MinimumGCAge:            10 * time.Second,
 		MaxPerPodContainerCount: 2,
 		MaxContainerCount:       100,
@@ -698,6 +703,7 @@ type KubeletConfig struct {
 	NodeName                       string
 	PodInfraContainerImage         string
 	SyncFrequency                  time.Duration
+	ContainerGCInterval            time.Duration
 	RegistryPullQPS                float64
 	RegistryBurst                  int
 	MinimumGCAge                   time.Duration
@@ -762,6 +768,7 @@ func createAndInitKubelet(kc *KubeletConfig) (k KubeletBootstrap, pc *config.Pod
 		kc.RootDirectory,
 		kc.PodInfraContainerImage,
 		kc.SyncFrequency,
+		kc.ContainerGCInterval,
 		float32(kc.RegistryPullQPS),
 		kc.RegistryBurst,
 		gcPolicy,

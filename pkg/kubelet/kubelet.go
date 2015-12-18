@@ -122,6 +122,7 @@ func NewMainKubelet(
 	rootDirectory string,
 	podInfraContainerImage string,
 	resyncInterval time.Duration,
+	containerGCInterval time.Duration,
 	pullQPS float32,
 	pullBurst int,
 	containerGCPolicy ContainerGCPolicy,
@@ -157,6 +158,9 @@ func NewMainKubelet(
 	}
 	if resyncInterval <= 0 {
 		return nil, fmt.Errorf("invalid sync frequency %d", resyncInterval)
+	}
+	if containerGCInterval <= 0 {
+		return nil, fmt.Errorf("invalid container garbage collection frequency %d", containerGCInterval)
 	}
 	if systemContainer != "" && cgroupRoot == "" {
 		return nil, fmt.Errorf("invalid configuration: system container was specified and cgroup root was not specified")
@@ -233,6 +237,7 @@ func NewMainKubelet(
 		kubeClient:                     kubeClient,
 		rootDirectory:                  rootDirectory,
 		resyncInterval:                 resyncInterval,
+		containerGCInterval:            containerGCInterval,
 		containerRefManager:            containerRefManager,
 		readinessManager:               readinessManager,
 		httpClient:                     &http.Client{},
@@ -375,15 +380,16 @@ type nodeLister interface {
 
 // Kubelet is the main kubelet implementation.
 type Kubelet struct {
-	hostname       string
-	nodeName       string
-	dockerClient   dockertools.DockerInterface
-	runtimeCache   kubecontainer.RuntimeCache
-	kubeClient     client.Interface
-	rootDirectory  string
-	podWorkers     PodWorkers
-	resyncInterval time.Duration
-	sourcesReady   SourcesReadyFn
+	hostname            string
+	nodeName            string
+	dockerClient        dockertools.DockerInterface
+	runtimeCache        kubecontainer.RuntimeCache
+	kubeClient          client.Interface
+	rootDirectory       string
+	podWorkers          PodWorkers
+	resyncInterval      time.Duration
+	containerGCInterval time.Duration
+	sourcesReady        SourcesReadyFn
 
 	podManager podManager
 
@@ -677,7 +683,7 @@ func (kl *Kubelet) StartGarbageCollection() {
 		if err := kl.containerGC.GarbageCollect(); err != nil {
 			glog.Errorf("Container garbage collection failed: %v", err)
 		}
-	}, time.Minute)
+	}, kl.containerGCInterval)
 
 	go util.Forever(func() {
 		if err := kl.imageManager.GarbageCollect(); err != nil {
