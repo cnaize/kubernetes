@@ -1799,6 +1799,11 @@ const (
 	// Number of Pods that may be running on this Node: see ResourcePods
 )
 
+type ResourceMultipliers struct {
+	CPUMultiplier    float32
+	MemoryMultiplier float32
+}
+
 // ResourceList is a set of (resource name, quantity) pairs.
 type ResourceList map[ResourceName]resource.Quantity
 

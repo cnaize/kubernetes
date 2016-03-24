@@ -74,7 +74,7 @@ func TestRunOnce(t *testing.T) {
 		reasonCache:         NewReasonCache(),
 		clock:               util.RealClock{},
 	}
-	kb.containerManager = cm.NewStubContainerManager()
+	kb.containerManager = cm.NewStubContainerManager(api.ResourceMultipliers{CPUMultiplier: 1.0, MemoryMultiplier: 1.0})
 
 	kb.networkPlugin, _ = network.InitNetworkPlugin([]network.NetworkPlugin{}, "", nettest.NewFakeHost(nil))
 	if err := kb.setupDataDirs(); err != nil {
